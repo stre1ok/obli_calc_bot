@@ -20,19 +20,16 @@ def obligation_calculation(message):
 def what_price(message):
     global price
     price = message.text
-    while price.isdigit == False:
-        bot.send_message(message.from_user.id, "Введите цифрами")
-        price = message.text
-    price = float(message.text)
     bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
     bot.register_next_step_handler(message, what_basePrice)
 
 def what_basePrice(message):
     global basePrice
     basePrice = message.text
-    while basePrice.isdigit == False:
-        bot.send_message(message.from_user.id, "Введите цифрами")
-        basePrice = message.text
+    if basePrice.isdigit == False:
+        while basePrice.isdigit == False:
+            bot.send_message(message.from_user.id, "Введите цифрами")
+            basePrice = message.text      
     basePrice = float(message.text)       
     bot.send_message(message.from_user.id, "Введите доходность купона облигации в процентах(ПРИМЕР: Если 7.5%, то 7.5)")
     bot.register_next_step_handler(message, what_bondCoupon)
@@ -54,17 +51,3 @@ def what_periodInAge(message):
     bot.send_message(message.from_user.id, f"Общая доходность в год с учетом НДФЛ 13%: {round(((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87), 2)}%")
     
 bot.polling(none_stop=True)
-
-"""
-price = int(input("Введите стоимость облигации(в валюте):")) 
-basePrice = int(input("Введите номинал облигации(в валюте):")) 
-bondCoupon = float(input("Введите доходность купона облигации(в процентах):")) 
-periodInAge = float(input("Введите укажите количество до погашения облигации(пример 2 года 6 месяцев = 2.6):"))
- 
-print("Доходность от разницы номинала=", ((price/basePrice*100)-100)*-1) 
-print("Доходность от разницы номинала c учетом НДФЛ 13%=", (((price/basePrice*100)-100)*-1)*0.87) 
-print("Доходность от разницы номинала в год=",((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))) 
-print("Доходность от разницы номинала в год с учетом НДФЛ 13%=",((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87) 
-print("Общая доходность в год=",((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon) 
-print("Общая доходность в год с учетом НДФЛ 13%=",(((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87)
-"""
