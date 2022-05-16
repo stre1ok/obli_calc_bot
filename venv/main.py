@@ -21,9 +21,9 @@ def what_price(message):
     #global price
     Gprice = message.text
     if Gprice.isdigit() == False:
-        while Gprice.isdigit() == False:
-            bot.send_message(message.from_user.id, "Введите цифрами")
-            Gprice = message.text
+        bot.send_message(message.from_user.id, "Введите цифрами")
+        bot.register_next_step_handler(message, what_price)
+            
     price = float(message.text)            
             
     bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
