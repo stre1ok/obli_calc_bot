@@ -2,6 +2,8 @@ import telebot
 from telebot import types
 
 
+price, basePrice, bondCoupon, periodInAge = 0, 0, 0, 0
+
 bot = telebot.TeleBot('5307565681:AAF2rQrwXKPOAWuXg_WQU6YhbWGE4q6-M6M')
 
 @bot.message_handler(commands=['start'])
@@ -12,12 +14,32 @@ def start_message(message):
 def obligation_calculation(message):
     """Calculation"""
     if message.text == '/calc':
-        bot.send_message(message.chat.id, 'Введите стоимость облигации(в валюте)')
-        price = message.text
-        bot.send_message(message.chat.id, 'Введите номинал облигации(в валюте)')
-        basePrice = message.text
-    else:
-        bot.reply_to(message, message.text)
+        bot.send_message(message.from_user.id, "Введите стоимость облигации в валюте(ПРИМЕР: Если 879.69руб, то 879.69)")
+        bot.register_next_step_handler(message, what_price)
+
+def what_price(message):
+    global price
+    price = float(message.text)
+    bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
+    bot.register_next_step_handler(message, what_basePrice)
+
+def what_basePrice(message):
+    global basePrice
+    basePrice = float(message.text)
+    bot.send_message(message.from_user.id, "Введите доходность купона облигации в процентах(ПРИМЕР: Если 7.5%, то 7.5)")
+    bot.register_next_step_handler(message, what_bondCoupon)
+    
+def what_bondCoupon(message):
+    global bondCoupon
+    bondCoupon = float(message.text)
+    bot.send_message(message.from_user.id, "Введите укажите количество до погашения облигации(ПРИМЕР: Если 2 года 6 месяцев, то 2.6)")
+    bot.register_next_step_handler(message, what_periodInAge)
+    
+def what_periodInAge(message):
+    global periodInAge
+    periodInAge = float(message.text)
+    bot.send_message(message.from_user.id, f"Доходность от разницы номинала: {((price/basePrice*100)-100)*-1)}")
+    bot.send_message(message.from_user.id, f"Доходность от разницы номинала c учетом НДФЛ 13%: {(((price/basePrice*100)-100)*-1)*0.87)}")
 
 bot.polling(none_stop=True)
 
