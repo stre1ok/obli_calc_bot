@@ -8,14 +8,17 @@ bot = telebot.TeleBot('5307565681:AAF2rQrwXKPOAWuXg_WQU6YhbWGE4q6-M6M')
 def start_message(message):
     bot.send_message(message.chat.id, 'Hello')
 
-@bot.message_handler(message)
+@bot.message_handler(commands=['calc'])
 def obligation_calculation():
     """Calculation"""
     if message.text == '/calc':
-        bot.send_message(message.from_user.id, 'Введите стоимость облигации(в валюте)')
+        bot.send_message(chatid, 'Введите стоимость облигации(в валюте)')
         price = message.text
-        bot.send_message(message.from_user.id, 'Введите номинал облигации(в валюте)')
+        bot.send_message(chatid, 'Введите номинал облигации(в валюте)')
         basePrice = message.text
+    else:
+        bot.send_message(chatid, 'Введите номинал облигации(в валюте)')
+
 
 bot.polling(none_stop=True)
 
