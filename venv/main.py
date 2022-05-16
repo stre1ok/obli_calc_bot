@@ -25,12 +25,7 @@ def what_price(message):
 
 def what_basePrice(message):
     global basePrice
-    GbasePrice = message.text
-    if GbasePrice.isdigit == False:
-        while GbasePrice.isdigit == False:
-            bot.send_message(message.from_user.id, "Введите цифрами")
-            GbasePrice = message.text      
-    basePrice = float(GbasePrice)       
+    basePrice = float(message.text)   
     bot.send_message(message.from_user.id, "Введите доходность купона облигации в процентах(ПРИМЕР: Если 7.5%, то 7.5)")
     bot.register_next_step_handler(message, what_bondCoupon)
     
