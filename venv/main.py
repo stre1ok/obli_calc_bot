@@ -38,12 +38,12 @@ def what_bondCoupon(message):
 def what_periodInAge(message):
     global periodInAge
     periodInAge = float(message.text)
-    bot.send_message(message.from_user.id, f"Доходность от разницы номинала: {(((price/basePrice*100)-100)*-1)}")
-    bot.send_message(message.from_user.id, f"Доходность от разницы номинала c учетом НДФЛ 13%: {((((price/basePrice*100)-100)*-1)*0.87)}")
-    bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год: {((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10)))}")
-    bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год с учетом НДФЛ 13%: {((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87)}")
-    bot.send_message(message.from_user.id, f"Общая доходность в год: {((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)}")
-    bot.send_message(message.from_user.id, f"Общая доходность в год с учетом НДФЛ 13%: {(((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87)}")
+    bot.send_message(message.from_user.id, f"Доходность от разницы номинала: {round((((price/basePrice*100)-100)*-1), 2)}%")
+    bot.send_message(message.from_user.id, f"Доходность от разницы номинала c учетом НДФЛ 13%: {round(((((price/basePrice*100)-100)*-1)*0.87), 2)}%")
+    bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))), 2)}%")
+    bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год с учетом НДФЛ 13%: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87), 2)}%")
+    bot.send_message(message.from_user.id, f"Общая доходность в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon), 2)}%")
+    bot.send_message(message.from_user.id, f"Общая доходность в год с учетом НДФЛ 13%: {round(((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87), 2)}%")
     
 bot.polling(none_stop=True)
 
