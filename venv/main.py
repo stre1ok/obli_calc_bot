@@ -2,7 +2,7 @@ import telebot
 from telebot import types
 
 
-price, basePrice, bondCoupon, periodInAge = 0, 0, 0, 0
+#price, basePrice, bondCoupon, periodInAge = 0, 0, 0, 0
 
 bot = telebot.TeleBot('5307565681:AAF2rQrwXKPOAWuXg_WQU6YhbWGE4q6-M6M')
 
@@ -18,8 +18,14 @@ def obligation_calculation(message):
         bot.register_next_step_handler(message, what_price)
 
 def what_price(message):
-    global price
-    price = message.text
+    #global price
+    Gprice = message.text
+    if Gprice.isdigit() == False:
+        while Gprice.isdigit() == False:
+            bot.send_message(message.from_user.id, "Введите цифрами")
+            Gprice = message.text
+    price = float(message.text)            
+            
     bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
     bot.register_next_step_handler(message, what_basePrice)
 
