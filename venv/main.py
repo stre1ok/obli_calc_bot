@@ -19,13 +19,21 @@ def obligation_calculation(message):
 
 def what_price(message):
     global price
+    price = message.text
+    while price.isdigit == False:
+        bot.send_message(message.from_user.id, "Введите цифрами")
+        price = message.text
     price = float(message.text)
     bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
     bot.register_next_step_handler(message, what_basePrice)
 
 def what_basePrice(message):
     global basePrice
-    basePrice = float(message.text)
+    basePrice = message.text
+    while basePrice.isdigit == False:
+        bot.send_message(message.from_user.id, "Введите цифрами")
+        basePrice = message.text
+    basePrice = float(message.text)       
     bot.send_message(message.from_user.id, "Введите доходность купона облигации в процентах(ПРИМЕР: Если 7.5%, то 7.5)")
     bot.register_next_step_handler(message, what_bondCoupon)
     
