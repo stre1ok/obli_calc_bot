@@ -20,11 +20,13 @@ def obligation_calculation(message):
 def what_price(message):
     #global price
     Gprice = message.text
-    if Gprice.isdigit() == False:
+    try:
+        price = float(Gprice)
+    except TypeError: #Gprice.isdigit() == False:
         bot.send_message(message.from_user.id, "Введите цифрами")
         bot.register_next_step_handler(message, what_price)
             
-    price = float(message.text)            
+    price = float(Gprice)            
             
     bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
     bot.register_next_step_handler(message, what_basePrice)
