@@ -2,13 +2,13 @@ import telebot
 from telebot import types
 
 
-#price, basePrice, bondCoupon, periodInAge = 0, 0, 0, 0
+price, basePrice, bondCoupon, periodInAge = 0, 0, 0, 0
 
 bot = telebot.TeleBot('5307565681:AAF2rQrwXKPOAWuXg_WQU6YhbWGE4q6-M6M')
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.chat.id, 'Hello')
+    bot.send_message(message.chat.id, 'Напиши /calc для расчета')
 
 @bot.message_handler(func=lambda message: True)
 def obligation_calculation(message):
@@ -18,16 +18,8 @@ def obligation_calculation(message):
         bot.register_next_step_handler(message, what_price)
 
 def what_price(message):
-    #global price
-    Gprice = message.text
-    try:
-        price = float(Gprice)
-    except TypeError: #Gprice.isdigit() == False:
-        bot.send_message(message.from_user.id, "Введите цифрами")
-        bot.register_next_step_handler(message, what_price)
-            
-    price = float(Gprice)            
-            
+    global price
+    price = float(message.text)
     bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
     bot.register_next_step_handler(message, what_basePrice)
 
