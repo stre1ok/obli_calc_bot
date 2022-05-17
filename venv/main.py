@@ -38,21 +38,11 @@ def what_bondCoupon(message):
 def what_periodInAge(message):
     global periodInAge
     periodInAge = float(message.text)
-    s1 = f"Доходность от разницы номинала: {round((((price/basePrice*100)-100)*-1), 2)}%"
-    s2 = f"Доходность от разницы номинала c учетом НДФЛ 13%: {round(((((price/basePrice*100)-100)*-1)*0.87), 2)}%"
-    s3 = f"Доходность от разницы номинала в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))), 2)}%"
-    s4 = f"Доходность от разницы номинала в год с учетом НДФЛ 13%: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87), 2)}%"
-    s5 = f"Общая доходность в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon), 2)}%"
-    s6 = f"Общая доходность в год с учетом НДФЛ 13%: {round(((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87), 2)}%"
-    bot.send_message(message.from_user.id, s1, s2, s3, s4, s5, s6)
-    
-    '''
     bot.send_message(message.from_user.id, f"Доходность от разницы номинала: {round((((price/basePrice*100)-100)*-1), 2)}%")
     bot.send_message(message.from_user.id, f"Доходность от разницы номинала c учетом НДФЛ 13%: {round(((((price/basePrice*100)-100)*-1)*0.87), 2)}%")
     bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))), 2)}%")
     bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год с учетом НДФЛ 13%: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87), 2)}%")
     bot.send_message(message.from_user.id, f"Общая доходность в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon), 2)}%")
     bot.send_message(message.from_user.id, f"Общая доходность в год с учетом НДФЛ 13%: {round(((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87), 2)}%")
-    '''
     
 bot.polling(none_stop=True)
