@@ -26,12 +26,12 @@ def what_price(message):
         except Exception:
             bot.send_message(message.from_user.id, 'Вводи цифрами.')
             break
-        if type(price) != float:
-            bot.send_message(message.from_user.id, "Введите стоимость облигации в валюте(ПРИМЕР: Если 879.69руб, то 879.69)")
-            bot.register_next_step_handler(message, what_price)
-        else:
-            bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
-            bot.register_next_step_handler(message, what_basePrice)
+    if type(price) != float:
+        bot.send_message(message.from_user.id, "Введите стоимость облигации в валюте(ПРИМЕР: Если 879.69руб, то 879.69)")
+        bot.register_next_step_handler(message, what_price)
+    else:
+        bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
+        bot.register_next_step_handler(message, what_basePrice)
 
 def what_basePrice(message):
     global basePrice
