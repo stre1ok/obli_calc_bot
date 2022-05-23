@@ -6,6 +6,14 @@ price, basePrice, bondCoupon, periodInAge = 0, 0, 0, 0
 
 bot = telebot.TeleBot('5307565681:AAF2rQrwXKPOAWuXg_WQU6YhbWGE4q6-M6M')
 
+def only_float(float_number):
+    while type(float_number) != float:
+        try:
+            float_number = float(float_number)
+        except Exception:
+            bot.send_message(message.from_user.id, 'Вводи цифрами.')
+            break
+
 @bot.message_handler(commands=['start'])
 def start_message(message):
     bot.send_message(message.chat.id, 'Напиши /calc для расчета')
@@ -26,7 +34,8 @@ def what_price(message):
         except Exception:
             bot.send_message(message.from_user.id, 'Вводи цифрами.')
             break
-    if type(price) != float:
+
+    if type(price) != float or price <= 0:
         bot.send_message(message.from_user.id, "Введите стоимость облигации в валюте(ПРИМЕР: Если 879.69руб, то 879.69)")
         bot.register_next_step_handler(message, what_price)
     else:
@@ -35,15 +44,37 @@ def what_price(message):
 
 def what_basePrice(message):
     global basePrice
-    basePrice = float(message.text)   
-    bot.send_message(message.from_user.id, "Введите доходность купона облигации в процентах(ПРИМЕР: Если 7.5%, то 7.5)")
-    bot.register_next_step_handler(message, what_bondCoupon)
+    basePrice = message.text
+    while type(basePrice) != float:
+        try:
+            basePrice = float(basePrice)
+        except Exception:
+            bot.send_message(message.from_user.id, 'Вводи цифрами.')
+            break
+
+    if type(basePrice) != float or basePrice <= 0:
+        bot.send_message(message.from_user.id, "Введите номинал облигации в валюте(ПРИМЕР: Если 1000руб, то 1000)")
+        bot.register_next_step_handler(message, what_basePrice)
+    else:
+        bot.send_message(message.from_user.id, "Введите доходность купона облигации в процентах(ПРИМЕР: Если 7.5%, то 7.5)")
+        bot.register_next_step_handler(message, what_bondCoupon)
     
 def what_bondCoupon(message):
-    global bondCoupon
-    bondCoupon = float(message.text)
-    bot.send_message(message.from_user.id, "Введите укажите количество до погашения облигации(ПРИМЕР: Если 2 года 6 месяцев, то 2.6)")
-    bot.register_next_step_handler(message, what_periodInAge)
+    global bondCoupon, only_float
+    bondCoupon = message.text
+    while type(bondCoupon) != float:
+        try:
+            bondCoupon = float(bondCoupon)
+        except Exception:
+            bot.send_message(message.from_user.id, 'Вводи цифрами.')
+            break
+
+    if type(bondCoupon) != float or bondCoupon <= 0:
+        bot.send_message(message.from_user.id, "Введите доходность купона облигации в процентах(ПРИМЕР: Если 7.5%, то 7.5)")
+        bot.register_next_step_handler(message, what_bondCoupon)
+    else:
+        bot.send_message(message.from_user.id, "Введите укажите количество до погашения облигации(ПРИМЕР: Если 2 года 6 месяцев, то 2.6)")
+        bot.register_next_step_handler(message, what_periodInAge)
     
 def what_periodInAge(message):
     global periodInAge
