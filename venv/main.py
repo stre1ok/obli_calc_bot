@@ -85,11 +85,8 @@ def what_periodInAge(message):
     tmp_str3 = f"Доходность от разницы номинала в год с учетом НДФЛ 13%: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87), 2)}%"
     tmp_str4 = f"Общая доходность в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon), 2)}%"
     tmp_str5 = f"Общая доходность в год с учетом НДФЛ 13%: {round(((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87), 2)}%"
-    bot.send_message(message.from_user.id, tmp_str0, \ntmp_str1, \ntmp_str2, \ntmp_str3, \ntmp_str4, \ntmp_str5)
-    #bot.send_message(message.from_user.id, f"Доходность от разницы номинала c учетом НДФЛ 13%: {round(((((price/basePrice*100)-100)*-1)*0.87), 2)}%")
-    #bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))), 2)}%")
-    #bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год с учетом НДФЛ 13%: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87), 2)}%")
-    #bot.send_message(message.from_user.id, f"Общая доходность в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon), 2)}%")
-    #bot.send_message(message.from_user.id, f"Общая доходность в год с учетом НДФЛ 13%: {round(((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))+bondCoupon)*0.87), 2)}%")
+    tmp_str_list = [tmp_str0, tmp_str1, tmp_str2, tmp_str3, tmp_str4, tmp_str5]
+    for i in range(6):
+        bot.send_message(message.from_user.id, tmp_str_list[i])
     
 bot.polling(none_stop=True)
