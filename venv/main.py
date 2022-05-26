@@ -79,7 +79,8 @@ def what_bondCoupon(message):
 def what_periodInAge(message):
     global periodInAge
     periodInAge = float(message.text)
-    bot.send_message(message.from_user.id, f"Доходность от разницы номинала: {round((((price/basePrice*100)-100)*-1), 2)}%")
+    tmp_str0 = f"Доходность от разницы номинала: {round((((price/basePrice*100)-100)*-1), 2)}%"
+    bot.send_message(message.from_user.id, tmp_str0)
     bot.send_message(message.from_user.id, f"Доходность от разницы номинала c учетом НДФЛ 13%: {round(((((price/basePrice*100)-100)*-1)*0.87), 2)}%")
     bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))), 2)}%")
     bot.send_message(message.from_user.id, f"Доходность от разницы номинала в год с учетом НДФЛ 13%: {round((((((price/basePrice*100)-100)*-1)/(periodInAge//1+periodInAge%1/12*10))*0.87), 2)}%")
