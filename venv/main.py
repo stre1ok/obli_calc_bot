@@ -16,7 +16,7 @@ def only_float(float_number):
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.chat.id, 'Напиши /calc для расчета')
+    bot.send_message(message.chat.id, 'Напиши /calc для расчёта облигации\nНапиши /ccalc для расчёта ящика')
 
 @bot.message_handler(func=lambda message: True)
 def obligation_calculation(message):
@@ -24,7 +24,16 @@ def obligation_calculation(message):
     if message.text == '/calc':
         bot.send_message(message.from_user.id, "Введите стоимость облигации в валюте(ПРИМЕР: Если 879.69руб, то 879.69)")
         bot.register_next_step_handler(message, what_price)
+    if message.text == '/ccalc':
+        bot.send_message(message.from_user.id, "Введите стоимость ящика")
+        bot.register_next_step_handler(message, what_crate_price)
 
+'''*******************Рассчёт ящика*******************'''
+def what_crate_price(message):
+    crate_price = float(message.text)
+    bot.send_message(message.from_user.id, f"Цена продажи ящика в 0: {round(crate_price/0.85), 2}")
+
+'''*******************Рассчёт облигации*******************'''
 def what_price(message):
     global price
     price = message.text
